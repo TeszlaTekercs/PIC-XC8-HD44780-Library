@@ -8,7 +8,7 @@
 
 void lcd_wait(void)
 {
-    __delay_ms(200);
+    __delay_ms(10); //working with 8 MHz
 }
 
 void lcd_send_command(unsigned char command)
@@ -16,11 +16,17 @@ void lcd_send_command(unsigned char command)
     RW = 0;
     RS = 0;
     ENABLE = 1;
-    LCD_PORT = command & 0XF0;
+    LCD_PORT_D4 = (command & 0X10)?1:0;           //mask command's MSB bits and put it to the port
+    LCD_PORT_D5 = (command & 0X20)?1:0;           // conditional assignment: (expression) ? (TRUE):(FALSE))
+    LCD_PORT_D6 = (command & 0X40)?1:0;           //  
+    LCD_PORT_D7 = (command & 0X80)?1:0;           //
     ENABLE = 0;
     lcd_wait();
     ENABLE = 1;
-    LCD_PORT = (command & 0X0F) << 4;
+    LCD_PORT_D4 = ((command & 0X01) << 4)?1:0;    //mask command's LSB bits and put it to the port
+    LCD_PORT_D5 = ((command & 0X02) << 4)?1:0;    // conditional assignment: (expression) ? (TRUE):(FALSE))
+    LCD_PORT_D6 = ((command & 0X04) << 4)?1:0;    //
+    LCD_PORT_D7 = ((command & 0X08) << 4)?1:0;    //
     ENABLE = 0;
     lcd_wait();
 }
@@ -30,11 +36,17 @@ void lcd_send_data(unsigned char data)
     RW = 0;
     RS = 1;
     ENABLE = 1;
-    LCD_PORT = data & 0XF0;
+    LCD_PORT_D4 = (data & 0X10)?1:0;            //mask data's MSB bits and put it to the port
+    LCD_PORT_D5 = (data & 0X20)?1:0;            // conditional assignment: (expression) ? (TRUE):(FALSE))
+    LCD_PORT_D6 = (data & 0X40)?1:0;            //  
+    LCD_PORT_D7 = (data & 0X80)?1:0;            //
     ENABLE = 0;
     lcd_wait();
     ENABLE = 1;
-    LCD_PORT = (data & 0X0F) << 4;
+    LCD_PORT_D4 = ((data & 0X01) << 4)?1:0;     //mask data's LSB bits and put it to the port
+    LCD_PORT_D5 = ((data & 0X02) << 4)?1:0;     // conditional assignment: (expression) ? (TRUE):(FALSE))
+    LCD_PORT_D6 = ((data & 0X04) << 4)?1:0;     //
+    LCD_PORT_D7 = ((data & 0X08) << 4)?1:0;     //
     ENABLE = 0;
     lcd_wait();
 }
