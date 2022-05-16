@@ -23,10 +23,15 @@
 #error _XTAL_FREQ must be defined.
 #endif
 
-#define RS 0
-#define RW 0
-#define ENABLE 0
-#define LCD_PORT 0
+#define RS 0                //example: PORTDbits.RD1
+#define RW 0                //example: PORTDbits.RD2
+#define ENABLE 0            //example: PORTDbits.RD3
+#define LCD_PORT_D4         //example: PORTDbits.RD4
+#define LCD_PORT_D5         //example: PORTDbits.RD5  
+#define LCD_PORT_D6         //example: PORTDbits.RD6  
+#define LCD_PORT_D7         //example: PORTDbits.RD7
+// Connect to the ground the LCD's D0, D1, D2, D3 pinouts.
+//RW pin is not used (always 0). It maybe connected to the ground and get one extra pin on MCU.
 
 #ifndef RS
 #error RS must be defined.
@@ -40,8 +45,17 @@
 #error ENABLE must be defined.
 #endif
 
-#ifndef LCD_PORT
-#error LCD_PORT must be defined.
+#ifndef LCD_PORT_D4 
+#error LCD_PORT_D4 must be defined!
+#endif
+#ifndef LCD_PORT_D5 
+#error LCD_PORT_D5 must be defined!
+#endif
+#ifndef LCD_PORT_D6 
+#error LCD_PORT_D6 must be defined!
+#endif
+#ifndef LCD_PORT_D7 
+#error LCD_PORT_D7 must be defined!
 #endif
 
 #define ClearLCD 1
